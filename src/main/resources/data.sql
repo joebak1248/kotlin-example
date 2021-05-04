@@ -1,0 +1,1 @@
+INSERT INTO user (`id`,`name`,`address`)  values (1, 'name', 'adress')
