@@ -6,7 +6,6 @@ import com.example.demo.exception.AccountServiceException
 import com.example.demo.exception.ErrorType
 import com.example.demo.repository.UserRepository
 import org.springframework.stereotype.Service
-import java.util.*
 import javax.transaction.Transactional
 
 @Service
@@ -32,7 +31,7 @@ class UserService(
     }
 
     fun saveUser(userDTO: UserDTO): User {
-        val newUser = User(userDTO.id, userDTO.name, userDTO.address);
+        val newUser = User(name = userDTO.name, address = userDTO.address)
         userRepository.save(newUser)
         return newUser
     }

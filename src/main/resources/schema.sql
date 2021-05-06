@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS user;
+
 create table user (
     id INT not null AUTO_INCREMENT,
     name varchar(255) not null,

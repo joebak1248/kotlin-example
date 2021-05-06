@@ -2,18 +2,23 @@ server:
   port: 8080
 
 spring:
+  datasource:
+    url: dbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+    initialization-mode: always
+    platform: h2
+
   h2:
     console:
       enabled: true
-      path: /temp
-
-  datasource:
-    initialization-mode: always
+      path: /h2-console
 
   jpa:
-    hibernate:
-      ddl-auto: create
+    database-platform: org.hibernate.dialect.H2Dialect
     properties:
       hibernate:
+        ddl-auto: none
         format_sql: true
     show-sql: true
