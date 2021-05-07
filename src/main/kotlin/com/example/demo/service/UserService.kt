@@ -22,9 +22,11 @@ class UserService(
     fun changeUser(userDTO: UserDTO) : User {
         val user = userRepository.findById(userDTO.id)
             .orElseThrow { throw AccountServiceException(ErrorType.USER_NOT_FOUND) }
-
-        user.name = userDTO.name
-        user.address = userDTO.address
+        
+        user?.run {
+            name = userDTO.name
+            address = userDTO.address
+        }
         userRepository.save(user)
 
         return user
