@@ -3,7 +3,7 @@ package com.example.demo.dto
 import io.swagger.annotations.ApiModelProperty
 
 data class UserDTO (
-    @ApiModelProperty(name = "Id", example = "1", position = 0)
+    @ApiModelProperty(name = "Id (추가시에 적용되지 않음)", example = "1", position = 0, allowEmptyValue = true)
     val id: Int,
     @ApiModelProperty(name = "이름", example = "네이버파이낸셜", position = 1)
     val name: String,
