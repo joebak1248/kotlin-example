@@ -5,13 +5,15 @@ import com.example.demo.dto.UserDTO
 import com.example.demo.exception.AccountServiceException
 import com.example.demo.exception.ErrorType
 import com.example.demo.repository.UserRepository
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import javax.transaction.Transactional
 
 @Service
-class UserService(
-    private val userRepository: UserRepository
-) {
+class UserService {
+
+    @Autowired
+    private lateinit var userRepository: UserRepository
 
     fun getUser(userId: Int): User {
         return userRepository.findById(userId)
@@ -20,16 +22,13 @@ class UserService(
 
     @Transactional
     fun changeUser(userDTO: UserDTO) : User {
-        val user = userRepository.findById(userDTO.id)
+        return userRepository.findById(userDTO.id)
             .orElseThrow { throw AccountServiceException(ErrorType.USER_NOT_FOUND) }
-        
-        user?.run {
-            name = userDTO.name
-            address = userDTO.address
-        }
-        userRepository.save(user)
-
-        return user
+            .apply {
+                this.name = userDTO.name
+                this.address = userDTO.address
+                userRepository.save(this)
+            }
     }
 
     fun saveUser(userDTO: UserDTO): User {
