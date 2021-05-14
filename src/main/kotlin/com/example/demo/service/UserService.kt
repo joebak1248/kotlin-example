@@ -17,23 +17,28 @@ class UserService {
 
     fun getUser(userId: Int): User {
         return userRepository.findById(userId)
-            .orElseThrow { throw AccountServiceException(ErrorType.USER_NOT_FOUND) }
+            .orElseThrow {
+                throw AccountServiceException(ErrorType.USER_NOT_FOUND)
+            }
     }
 
     @Transactional
     fun changeUser(userDTO: UserDTO) : User {
         return userRepository.findById(userDTO.id)
-            .orElseThrow { throw AccountServiceException(ErrorType.USER_NOT_FOUND) }
-            .apply {
+            .orElseThrow {
+                throw AccountServiceException(ErrorType.USER_NOT_FOUND)
+            }.apply {
                 this.name = userDTO.name
                 this.address = userDTO.address
+            }.run {
                 userRepository.save(this)
             }
     }
 
     fun saveUser(userDTO: UserDTO): User {
-        val newUser = User(name = userDTO.name, address = userDTO.address)
-        userRepository.save(newUser)
-        return newUser
+        return User(name = userDTO.name, address = userDTO.address)
+            .run {
+                userRepository.save(this)
+            }
     }
 }
